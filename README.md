@@ -25,8 +25,9 @@ the predictive performance of the normalizing flow and the robustness of the
 detection criterion are increased.
 
 ## Videos
-![](weighted.mp4)
-![](spoofing.mp4)
+
+https://github.com/user-attachments/assets/a1796e3d-63d8-430f-a09b-5e3501b32b0f
+https://github.com/user-attachments/assets/0a0490ab-6211-4643-8339-61a0dcbb5b94
 
 ## Contents of the Repository
 - `hardware_experiments`: Data collected in hardware experiments using a swarm of HERA robots.

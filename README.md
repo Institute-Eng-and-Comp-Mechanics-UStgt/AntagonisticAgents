@@ -25,12 +25,8 @@ the predictive performance of the normalizing flow and the robustness of the
 detection criterion are increased.
 
 ## Videos
-<video width="320" height="240" controls>
-  <source src="weighted.mp4" type="video/mp4">
-</video>
-<video width="320" height="240" controls>
-  <source src="spoofing.mp4" type="video/mp4">
-</video>
+![](weighted.mp4)
+![](spoofing.mp4)
 
 ## Contents of the Repository
 - `hardware_experiments`: Data collected in hardware experiments using a swarm of HERA robots.

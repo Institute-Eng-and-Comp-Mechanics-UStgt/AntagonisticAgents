@@ -26,8 +26,9 @@ detection criterion are increased.
 
 ## Videos
 
-https://github.com/user-attachments/assets/a1796e3d-63d8-430f-a09b-5e3501b32b0f
-https://github.com/user-attachments/assets/0a0490ab-6211-4643-8339-61a0dcbb5b94
+https://github.com/user-attachments/assets/96813752-230e-4bc1-bd13-92efd88f5c4e
+
+https://github.com/user-attachments/assets/88e0cbdf-845e-4afd-bf05-c52e88973685
 
 ## Contents of the Repository
 - `hardware_experiments`: Data collected in hardware experiments using a swarm of HERA robots.

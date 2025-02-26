@@ -1,0 +1,374 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>get current position 
+lcm: listen, state handler
+else: get state</help_text><element><id>UMLClass</id><coordinates><x>280</x><y>360</y><w>192</w><h>472</h></coordinates><panel_attributes>/Robot/
+--
+- id
+- color
+
+- ts_control
+- max_vel
+- swarm
+- deployment_area
+
+- move_handler
+- state_handler
+- swarm_communication_handler
+
+- target_history
+- current_target
+
+--
+/+ async update_target()/
+/+ async update_position()/
+
+/+ start()/
+/+ stop()/
+/+ reset()/
+
++ get_action_history()
++ get_position_history()
++ get_current_position()
++ set_swarm()
++ set_deployment_area()
++ set_max_vel()
++ set_ts_control()
++ set_ts_communicate()
+
+--
+Responsibilities
+-- contains handlers responsible for 
+different robot functionality
+-- abstract class for basic functions like 
+move, update position
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>832</x><y>720</y><w>112</w><h>152</h></coordinates><panel_attributes>Hera
+--
+- hera_state
+- ts_PID
+
+--
++ _simulate_movement()
++_sim_ode_fun()
++_hera_model_rhs()
+
++ initialize_robot_state()
++ initialize_robot_position()
++ get_robot_state()
+group=group-4</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>864</y><w>160</w><h>96</h></coordinates><panel_attributes>VoronoiRobot
+/anomalous robot types/
+--
+- label
+
+--
++ compute_new_target()
+
+
+group=group-0</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>608</y><w>160</w><h>240</h></coordinates><panel_attributes>/DeploymentRobot/
+--
+- wait_for_ts_communicate
+
+--
++ async update_target()
++ async update_position()
+
+/+ _compute_new_target()/
++ _compute_optimal_target()
+
++ _evade_obstacles()
++ _stop_at_bounds()
++ _set_density_func()
+
++ start()
++ stop()
++ reset()
+
+--
+--fitted to deployment problem
+
+group=group-0</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>392</y><w>104</w><h>240</h></coordinates><panel_attributes>lt=&lt;&lt;-
+</panel_attributes><additional_attributes>110;10;50;10;50;280;11;280</additional_attributes></element><element><id>Relation</id><coordinates><x>392</x><y>32</y><w>160</w><h>344</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=n
+</panel_attributes><additional_attributes>180;10;10;10;10;410</additional_attributes></element><element><id>UMLClass</id><coordinates><x>536</x><y>8</y><w>208</w><h>248</h></coordinates><panel_attributes>RobotSwarm
+--
+- swarm_robots
+- n_robots
+- anomaly_detector
+- visualization_module
+
+--
++ cover_area()
++ is_anomal()
++ get_position_history()
++ get_action_history()
++ set_anomaly_detector()
++ start_run()
++ stop_run()
+
+--
+Allows to easily trigger the execution 
+of robot functions that concern the 
+entire swarm. Accesses the information 
+needed to visualize the swarm behaviour. 
+Used for centralized anomaly detection.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>592</x><y>440</y><w>144</w><h>104</h></coordinates><panel_attributes>/MoveHandler/
+--
+- ts_control
+
+--
+/+ trigger_movement()/
++ start()
++ stop()
++ reset()
+
+
+group=group-5</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>464</x><y>432</y><w>144</w><h>32</h></coordinates><panel_attributes>lt=-&gt;
+</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>592</x><y>664</y><w>144</w><h>144</h></coordinates><panel_attributes>LCM_MoveHandler
+--
+- communication_id
+- lc
+- seq_number_u
+
+--
++ trigger_movement()
++ _send_velocity()
+
+--
+sends the target velocity to 
+the robot via lcm
+group=group-5</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>824</x><y>1152</y><w>160</w><h>208</h></coordinates><panel_attributes>SimulatedOptitrack
+--
+- simulated_robot
+- monitored_robot_id
+
+- pause_between_monitoring
+- monitor_thread
+- seq_number_pos
+- lc
+
+--
++ get_current_position()
++ _monitor_state()
++_send_position()
+
+--
+monitors the simulated robot
+positions and sends them to
+the corresponding robot via lcm 
+group=group-3</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>584</x><y>904</y><w>144</w><h>136</h></coordinates><panel_attributes>/StateHandler/
+--
+- state_history
+- ts_control
+
+--
+/+ get_robot_state()/
+/+ _update_state()/
+
++ start()
++ stop()
++ reset()
+
+group=group-2</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>456</y><w>56</w><h>248</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-5</panel_attributes><additional_attributes>50;10;10;10;10;290;50;290</additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>456</y><w>56</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-5</panel_attributes><additional_attributes>50;10;10;10;10;160;50;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>592</x><y>560</y><w>144</w><h>96</h></coordinates><panel_attributes>SimulationMoveHandler
+--
+- simulated_robot
+
+--
++ trigger_movement()
+
+--
+does not use lcm
+group=group-5</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>824</x><y>1368</y><w>160</w><h>48</h></coordinates><panel_attributes>Optitrack
+--
+sends the position information 
+    to the robots via lcm
+group=group-3</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>584</x><y>1056</y><w>144</w><h>120</h></coordinates><panel_attributes>BasicStateHandler
+--
+- state_monitor
+
+--
++ get_robot_state()
++ _update_state()
+
+--
+gets state information from its
+state monitor
+group=group-2</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>824</x><y>904</y><w>160</w><h>96</h></coordinates><panel_attributes>/StateMonitor/
+--
+- ts_control
+
+--
++ get_current_position()
+/+ _monitor_state()/
++ start()
++ stop()
+group=group-3</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>912</y><w>48</w><h>264</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-3</panel_attributes><additional_attributes>40;10;10;10;10;310;40;310</additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>912</y><w>48</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-3</panel_attributes><additional_attributes>40;10;10;10;10;580;40;580</additional_attributes></element><element><id>UMLClass</id><coordinates><x>584</x><y>1184</y><w>144</w><h>200</h></coordinates><panel_attributes>LCM_StateHandler
+--
+- id
+- communication_id
+
+- pause_between_updating
+- update_thread
+- seq_number_pos
+- lc
+
+--
++ get_robot_state()
++ _update_state()
++ _lcm_handler()
+
+--
+uses LCM to collect infor-
+mation about the robot state
+group=group-2</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>928</y><w>48</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-2</panel_attributes><additional_attributes>40;10;10;10;10;180;40;180</additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>928</y><w>48</w><h>288</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-2</panel_attributes><additional_attributes>40;10;10;10;10;340;40;340</additional_attributes></element><element><id>UMLClass</id><coordinates><x>824</x><y>1016</y><w>160</w><h>128</h></coordinates><panel_attributes>SimulatedSensor
+--
+- simulated_robot
+- current_position
+
+--
++ get_current_position()
++ _monitor_state()
+
+--
+Simulates a sensor attached
+to the robot agent
+group=group-3</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>968</x><y>464</y><w>56</w><h>592</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>20;720;50;720;50;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>1072</y><w>120</w><h>24</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>832</x><y>440</y><w>144</w><h>264</h></coordinates><panel_attributes>/RobotSimulation/
+--
+- id
+- use_lcm
+- ts_control
+- wheel_is_lagging
+
+--
++ trigger_movement()
+/ + _simulate_movement()/
++ introduce_wheel_lag()
+
++ _listen()
++ _lcm_handler()
++ start()
++ stop()
+
+/ + initialize_robot_state()/
+/ + initialize_robot_position()/
+/ + get_robot_state()/
+
+--
+run physical simulation
+group=group-4</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>440</y><w>48</w><h>312</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-4</panel_attributes><additional_attributes>40;10;10;10;10;370;40;370</additional_attributes></element><element><id>UMLNote</id><coordinates><x>16</x><y>0</y><w>216</w><h>192</h></coordinates><panel_attributes>Legend
+
+--
+--
+/AbstractClass/
+--
+--
+ChildClass
+--
+--
+- attribute
+
+--
++ function()
+/+ abstract_function()/
++ _private_function_of_class()
+
+--
+Information about relations (arrows): 
+https://umlboard.com/docs/relations/
+
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>464</x><y>448</y><w>136</w><h>480</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;80;10;80;580;150;580</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>1200</y><w>120</w><h>24</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>1200</y><w>120</w><h>224</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;80;10;80;260;130;260</additional_attributes></element><element><id>Relation</id><coordinates><x>728</x><y>440</y><w>120</w><h>160</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;180;60;180;60;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>728</x><y>520</y><w>120</w><h>240</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;280;80;280;80;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>912</y><w>48</w><h>128</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-3</panel_attributes><additional_attributes>40;10;10;10;10;140;40;140</additional_attributes></element><element><id>Relation</id><coordinates><x>968</x><y>464</y><w>56</w><h>728</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>20;890;50;890;50;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>328</x><y>904</y><w>144</w><h>128</h></coordinates><panel_attributes>/SwarmCommunicationHandler/
+--
+- swarm_info
+- swarm
+
+--
+/+ async gather_swarm_info()/
++ start()
++ stop()
++ reset()
++ set_robot_swarm()
+group=group-7</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>456</y><w>232</w><h>472</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>210;10;270;10;270;510;10;510;10;570;30;570</additional_attributes></element><element><id>UMLClass</id><coordinates><x>328</x><y>1048</y><w>144</w><h>112</h></coordinates><panel_attributes>BasicCommunicationHandler
+--
+- state_monitor
+
+--
++ async gather_swarm_info()
+
+--
+accesses the state monitor to
+get information about the 
+current robot state
+group=group-7</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>328</x><y>1168</y><w>144</w><h>200</h></coordinates><panel_attributes>LCM_CommunicationHandler
+--
+- communication_id
+- ts_communicate
+- wait_for_swarm_info
+- lc
+- seq_number
+- listen_thread
+
+--
++ async gather_swarm_info()
++ _communicate_to_swarm()
++ _listen()
++ _lcm_handler()
+
+--
+uses LCM to exchange infor-
+mation about the swarm state
+group=group-7</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>296</x><y>936</y><w>48</w><h>256</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-7</panel_attributes><additional_attributes>40;10;10;10;10;300;40;300</additional_attributes></element><element><id>Relation</id><coordinates><x>296</x><y>936</y><w>48</w><h>136</h></coordinates><panel_attributes>lt=&lt;&lt;-
+group=group-7</panel_attributes><additional_attributes>40;10;10;10;10;150;40;150</additional_attributes></element><element><id>Relation</id><coordinates><x>296</x><y>1288</y><w>224</w><h>112</h></coordinates><panel_attributes>lt=&lt;.
+group=group-7</panel_attributes><additional_attributes>40;30;10;30;10;120;260;120;260;10;220;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>880</x><y>8</y><w>176</w><h>200</h></coordinates><panel_attributes>AnomalyDetector
+--
+- detector
+- prediction_step
+- n_robots
+- n_anomal_steps
+- anomaly_prediction
+- prediction_history
+--
++ initialize()
+/+ detect_anomaly()/
+/+ is_anomal()/
+/+ sample_robot_actions()/
+
+--
+receives the robot swarm data, 
+preprocesses it and classifies the 
+robot actions as normal or anomal
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>880</x><y>280</y><w>176</w><h>40</h></coordinates><panel_attributes>SwarmVisualization
+--
+visualizes the robot simulation</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>64</y><w>160</w><h>240</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>180;280;90;280;90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>8</y><w>160</w><h>64</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>180;10;90;10;90;60;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>464</x><y>56</y><w>88</w><h>896</h></coordinates><panel_attributes>lt=-&gt;
+</panel_attributes><additional_attributes>10;1100;40;1100;40;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>616</y><w>56</w><h>288</h></coordinates><panel_attributes>lt=&lt;&lt;-
+
+group=group-0</panel_attributes><additional_attributes>50;10;10;10;10;340;51;340</additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>288</y><w>160</w><h>240</h></coordinates><panel_attributes>/FormationRobot/
+--
+- boundary
+- wait_for_ts_communicate
+
+--
++ async update_target()
++ async update_position()
+
+/+ compute_new_target()/
++ compute_optimal_target()
+
++ evade_obstacles()
++ stop_at_bounds()
+
++ start()
++ stop()
++ reset()
+
+--
+- fitted to formation control
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>296</y><w>104</w><h>104</h></coordinates><panel_attributes>lt=&lt;&lt;-
+</panel_attributes><additional_attributes>110;110;50;110;50;10;11;10</additional_attributes></element></diagram>

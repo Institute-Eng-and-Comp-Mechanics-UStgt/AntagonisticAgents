@@ -24,13 +24,25 @@ the simulated scenarios. Compared to the state-of-the-art approach, both
 the predictive performance of the normalizing flow and the robustness of the
 detection criterion are increased.
 
+## Videos
+<video width="320" height="240" controls>
+  <source src="weighted.mp4" type="video/mp4">
+</video>
+<video width="320" height="240" controls>
+  <source src="spoofing.mp4" type="video/mp4">
+</video>
+
 ## Contents of the Repository
 - `hardware_experiments`: Data collected in hardware experiments using a swarm of HERA robots.
 - `lcm_types`: Message types used for communication within the robot swarm during hardware experiments.
 - `simulation_data`: Training, validation and test data collected from simulations.
-- `src`: Source code.
-- `trained_models`: Neural networks.
-- `example.ipynb`: Jupyter notebook showing an example run including the detection method.
+- `src`:
+    - `anomaly_detectors`: The anomaly detector uses a neural network to predict the probability density values of the robot actions and applies the detection criterion.
+    - `deployment_area`: Model of the area that the robot swarm deploys in.
+    - `robots`: Model of a HERA robot.
+    - `visualize`: Plots and animations.
+- `trained_models`: Neural networks that are trained to predict the probability density value of a robot action given the robot's environmental context.
+- `example.ipynb`: Jupyter notebook showing an example run including the anomaly detection method.
 - `setup.py`: Setup file.
 - `requirements.txt`: Required packages to run the notebooks.
 

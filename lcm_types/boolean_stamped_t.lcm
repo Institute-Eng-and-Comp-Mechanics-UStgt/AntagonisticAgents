@@ -1,0 +1,6 @@
+package itmessage;
+struct boolean_stamped_t
+{
+    boolean  value; // boolean (the actual content) to be sent
+    double   time_stamp; // time stemp, larger number is newer
+}

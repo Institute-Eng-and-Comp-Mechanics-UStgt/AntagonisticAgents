@@ -1,0 +1,11 @@
+package itmessage;
+struct error_vector_t
+{
+    int64_t  seq_number; // sequential number of the message
+    int32_t  length; // length of the value vector / array
+    double   value[length]; // array / vector to be sent
+    int32_t  N_active; // number of robots actively cooperating in the task solution
+    boolean  active; // flag whether the sending robot is actively cooperating in the task solution
+    int32_t  active_robots[N_active]; // the set of robots actively cooperating in the task solution
+    int32_t  id_sender; // unique id number of the sender
+}

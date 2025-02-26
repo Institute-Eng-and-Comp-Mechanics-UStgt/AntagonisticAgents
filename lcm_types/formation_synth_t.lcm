@@ -1,0 +1,9 @@
+package itmessage;
+struct formation_synth_t
+{
+    int64_t  seq_number; // sequential number of the message
+    int32_t  length; // length of the position vector / array (i.e. the number of robots)
+    double   positions[length]; // array / vector to be sent
+    double  cost; // cost of the formation configuration
+    int32_t  id_sender; // unique id number of the sender
+}
